@@ -18,7 +18,7 @@
 
 好吧，虽然我觉得一个好的设计师，肯定会知道哪些字体可以被用作商业设计。
 
-![图2](.\img\图1.jpg)
+![图1](https://github.com/muruoxi2018/Check_Font_Copyright/blob/master/img/%E5%9B%BE1.jpg?raw=true)
 
 #### 原理
 
@@ -65,7 +65,7 @@ function CheckFont(t) {
 
 尽管我写了一些用来辅助我的软件。
 
-![图2](.\img\图2.png)
+![图2](https://github.com/muruoxi2018/Check_Font_Copyright/blob/master/img/%E5%9B%BE2.png?raw=true)
 
 万幸，我会的程序开发语言很多，虽然我没有任何精通的语言。
 
