@@ -134,6 +134,9 @@ function getFreeFontsList()
 {
     $result = db_find('fonts', array('is_vip' => 0, 'verify' => 1));
     $result = arrlist_keep_keys($result, array('cn_name', 'en_name', 'is_vip', 'attachment'));
+    foreach($result as &$val){
+        $val['attachment'] = atod($val['attachment']);
+    }
     xn_message(1, array('fontslist' => $result));
 }
 
