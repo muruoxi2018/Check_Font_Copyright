@@ -32,7 +32,7 @@ $_SERVER['conf'] = $conf;
 
 // 下面开始处理事物
 // -1 意料外的错误
-// 0 意料中的错误
+// 0 一切正常
 // 1+ 各种识别中的状态
 
 //设置返回类型为json
@@ -80,9 +80,9 @@ function addFont()
 
     $result = db_find_one('fonts', array('en_name' => $fonts['en_name']));
 
-    $result ? xn_message(0, '这个字体已经入库了，请不要重复提交') : db_insert('fonts', $fonts);
+    $result ? xn_message(-1, '这个字体已经入库了，请不要重复提交') : db_insert('fonts', $fonts);
 
-    xn_message(1, '提交成功');
+    xn_message(0, '提交成功');
 }
 
 /**
@@ -102,7 +102,7 @@ function getAllFontsList()
         $arr['attachment'] = atod($arr['attachment']);
     }
 
-    $result ? xn_message(1, array('fontslist' => $result)) : xn_message(-1, '数据库读取失败');
+    $result ? xn_message(0, array('fontslist' => $result)) : xn_message(-1, '数据库读取失败');
 }
 
 /**
@@ -120,7 +120,7 @@ function getStatistics()
     $result['count'] = db_count('fonts');
     $result['verify'] = db_count('fonts', array('verify' => 1));
 
-    xn_message(1, $result);
+    xn_message(0, $result);
 }
 
 /**
@@ -134,10 +134,10 @@ function getFreeFontsList()
 {
     $result = db_find('fonts', array('is_vip' => 0, 'verify' => 1));
     $result = arrlist_keep_keys($result, array('cn_name', 'en_name', 'is_vip', 'attachment'));
-    foreach($result as &$val){
+    foreach ($result as &$val) {
         $val['attachment'] = atod($val['attachment']);
     }
-    xn_message(1, array('fontslist' => $result));
+    xn_message(0, array('fontslist' => $result));
 }
 
 /**
@@ -164,7 +164,7 @@ function uploadFont()
             'download' => str_replace($_SERVER['conf']['upload_path'], $_SERVER['conf']['downurl'], $newname)
         ));
     } else {
-        xn_message(0, '文件类型错误');
+        xn_message(-1, '文件类型错误');
     }
 }
 
@@ -178,20 +178,24 @@ function uploadFont()
 function searchFonts()
 {
     $font = param('font');
+    $page = param('page');
+    $limit = param('limit');
     if (!$font) {
-        xn_message(0, '请输入字体的名称');
+        xn_message(-1, '请输入字体的名称');
     }
-    $en_result = db_find('fonts', array('en_name' => array('LIKE' => $font), 'verify' => 1));
-    $cn_result = db_find('fonts', array('cn_name' => array('LIKE' => $font), 'verify' => 1));
+    $en_result = db_find('fonts', array('en_name' => array('LIKE' => $font), 'verify' => 1), null, $page, $limit);
+    $cn_result = db_find('fonts', array('cn_name' => array('LIKE' => $font), 'verify' => 1), null, $page, $limit);
     $result = $en_result + $cn_result;
     $result = arrlist_keep_keys($result, array('cn_name', 'en_name', 'is_vip', 'attachment'));
     foreach ($result as &$arr) {
         $arr['attachment'] = $arr['is_vip'] == 2 ? '#' : atod($arr['attachment']);
     }
+    $en_count = db_count('fonts', array('en_name' => array('LIKE' => $font), 'verify' => 1));
+    $cn_count = db_count('fonts', array('cn_name' => array('LIKE' => $font), 'verify' => 1));
     if (!count($result)) {
-        xn_message(0, '尚未收录该字体信息');
+        xn_message(-1, '尚未收录该字体信息');
     } else {
-        xn_message(1, array('fonts' => $result));
+        xn_message(0, array('fonts' => $result, 'count' => $cn_count + $en_count));
     }
 }
 

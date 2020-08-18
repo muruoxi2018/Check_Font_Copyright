@@ -35,10 +35,6 @@
             background-color: rgba(255, 255, 255, 0.8);
         }
 
-        .xinwen {
-            /*max-height: 420px;*/
-        }
-
         h2 {
             font-size: 42px;
             font-weight: 900;
@@ -72,58 +68,68 @@
             text-align: center;
             font-weight: 300;
         }
+
+        .margin-buttom20 {
+            margin-bottom: 20px;
+        }
+
+        /*替换一些layui的样式*/
+        .layui-colla-title {
+            background-color: transparent;
+        }
+
+        .layui-collapse {
+            border-width: 0px;
+        }
+
+        .layui-elem-quote {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
     </style>
 </head>
 
 <body>
     <div class="layui-container">
-        <div class="layui-row layui-center">
+        <div class="layui-row layui-center margin-buttom20">
             <h2 class="layui-anim layui-anim-scaleSpring">我的字体可以商用吗？</h2>
             <h3>毁掉一个公司只要让他家设计师用这些字体就行了！</h3>
         </div>
+        <blockquote class="layui-elem-quote">
+            <i class="layui-icon layui-icon-tips"></i>
+            本站检测结果仅供参考，数据来源于网络，站长人工整理而来。
+            <br />
+            <i class="layui-icon layui-icon-face-smile"></i>
+            如果某个字体查不到，那多半是无法用于商业的。
+        </blockquote>
         <div class="layui-row xinwen">
+
             <div class="layui-col-md9">
-                <fieldset class="layui-elem-field layui-field-title">
-                    <legend>你永远不知道我们的同行可以多优秀</legend>
-                    <div class="layui-field-box">
-                        <ul class="layui-timeline">
-                            <li class="layui-timeline-item">
-                                <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
-                                <div class="layui-timeline-content layui-text">
-                                    <h3 class="layui-timeline-title">7月28日</h3>
-                                    <p>设计师使用汉仪字体被索赔150万！字体侵权，小心下一个中枪的就是你……</p>
-                                </div>
-                            </li>
-                            <li class="layui-timeline-item">
-                                <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
-                                <div class="layui-timeline-content layui-text">
-                                    <h3 class="layui-timeline-title">7月27日</h3>
-                                    <p>使用“方正字体”被索赔150万？中招几率最大的侵权来了！</p>
-                                </div>
-                            </li>
-                            <li class="layui-timeline-item">
-                                <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
-                                <div class="layui-timeline-content layui-text">
-                                    <h3 class="layui-timeline-title">7月25日</h3>
-                                    <p>实习生使用方正字体被索赔2000多万，方正官方回应：从来没有过</p>
-                                </div>
-                            </li>
-                            <li class="layui-timeline-item">
-                                <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
-                                <div class="layui-timeline-content layui-text">
-                                    <div class="layui-timeline-title">过去</div>
-                                </div>
-                            </li>
-                        </ul>
+                <div class="layui-collapse" lay-accordion>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">站点统计</h2>
+                        <div class="layui-colla-content layui-show">
+                            当前已收录字体：套，其中免费字体：套，等待审核：套
+                        </div>
                     </div>
-                </fieldset>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">联系站长</h2>
+                        <div class="layui-colla-content">
+                            合作 / 提交字体，请发邮件到13993481533@163.com与我沟通。
+                        </div>
+                    </div>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">友情链接</h2>
+                        <div class="layui-colla-content">
+                            没见过把友链放在这里的吧，哈哈哈~
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="layui-col-md3">
                 <div class="logo_gif">
                     <img src="./img/gif.jpg" alt="我的字体可以商用吗？" class="layui-anim layui-anim-scaleSpring">
                 </div>
             </div>
-
         </div>
         <div class="layui-row main">
             <div class="layui-tab layui-tab-brief" lay-filter="tab">
@@ -136,13 +142,13 @@
                 <div class="layui-tab-content" lay-filter="tab">
                     <div class="layui-tab-item layui-show">
                         <div id="fontList">
-                            <table class="layui-table" lay-skin="line">
+                            <table class="layui-table" lay-skin="line" lay-filter="all">
                                 <thead>
                                     <tr>
-                                        <th>中文名称</th>
-                                        <th>英文名称</th>
-                                        <th>授权方式</th>
-                                        <th>下载地址</th>
+                                        <th lay-data="{field:'cn_name',sort: true}">中文名称</th>
+                                        <th lay-data="{field:'en_name',sort: true}">英文名称</th>
+                                        <th lay-data="{field:'is_vip',sort: true}">授权方式</th>
+                                        <th lay-data="{field:'attachment'}">下载地址</th>
                                     </tr>
                                 </thead>
                                 <tbody id="fontBody">
@@ -160,8 +166,8 @@
                             </button>
                         </form>
 
-                        <table class="layui-table" lay-skin="line">
-                            <thead>
+                        <table class="layui-table" lay-skin="line" lay-filter="search" id="search">
+                            <!-- <thead>
                                 <tr>
                                     <th>中文名称</th>
                                     <th>英文名称</th>
@@ -170,13 +176,13 @@
                                 </tr>
                             </thead>
                             <tbody id="searchBody">
-                            </tbody>
+                            </tbody> -->
                         </table>
 
                     </div>
                     <div class="layui-tab-item">
-                        <table class="layui-table" lay-skin="line">
-                            <thead>
+                        <table class="layui-table" lay-skin="line" lay-filter="free" id="free">
+                            <!-- <thead>
                                 <tr>
                                     <th>中文名称</th>
                                     <th>英文名称</th>
@@ -185,7 +191,7 @@
                                 </tr>
                             </thead>
                             <tbody id="freeBody">
-                            </tbody>
+                            </tbody> -->
                         </table>
                     </div>
                     <div class="layui-tab-item">
@@ -245,13 +251,14 @@
     <script src="./layui/layui.js"></script>
     <script>
         let fonts = [];
-        layui.use(['layer', 'form', 'element', 'util', 'upload'], function () {
+        layui.use(['layer', 'form', 'element', 'util', 'upload', 'table'], function () {
             var layer = layui.layer
                 , form = layui.form
                 , element = layui.element
                 , util = layui.util
                 , $ = layui.$
-                , upload = layui.upload;
+                , upload = layui.upload
+                , table = layui.table;
 
             form.on('submit(tijiao)', function (data) {
                 $.ajax({
@@ -267,20 +274,33 @@
             });
 
             form.on('submit(search)', function (data) {
-                $.ajax({
-                    url: 'api.php?action=searchFonts',
-                    type: 'post',
-                    data: data.field,
-                    success: function (data) {
-                        if (data.code == 0) {
-                            layer.message(data.message);
+
+                table.render({
+                    elem: '#search'
+                    , url: '/api.php?action=searchFonts&font=' + data.field.font
+                    , method: 'post'
+                    , page: true
+                    , cols: [[
+                        { field: 'cn_name', title: '中文名称', sort: true }
+                        , { field: 'en_name', title: '英文名称', sort: true }
+                        , { field: 'is_vip', title: '授权方式', sort: true }
+                        , { field: 'attachment', title: '下载地址' }
+                    ]],
+                    parseData: function (res) {
+                        layui.each(res.message.fonts, function (n, f) {
+                            res.message.fonts['is_vip'] = numtovip(f['is_vip'])
+                        })
+                        
+                        let ret = {
+                            "code": res.code,
+                            "msg": res.message,
+                            "count": res.message.count,
+                            "data": res.message.fonts
                         }
-                        if (data.code == 1) {
-                            PushFontsList(data.message.fonts, 'searchBody');
-                        }
+                        console.log(res.message.count)
+                        return ret;
                     }
                 });
-
                 return false;
             });
 
@@ -324,6 +344,10 @@
                         });
                         PushFontsList(fonts, 'fontBody');
                         console.log('字体检测结束！QQ：1171867037')
+                        table.init('all', {
+                            limit: 10,
+                            page: true
+                        });
                     }
                     else {
                         layer.msg(res.message)
@@ -348,29 +372,21 @@
                     })
                 }
             });
+
         });
 
+        function numtovip(f) {
+            return f==0?'<b class="layui-bg-green">完全免费</b>' : (f == 1 ? '<b class="layui-bg-red">商业付费</b>' : '<b class="layui-bg-black">完全付费</b>')
+        }
 
         function PushFontsList(fontslist, id) {
             let list = '';
             layui.each(fontslist, function (num, font) {
-                font['is_vip'] = font['is_vip'] == 0 ? '完全免费' : (font['is_vip'] == 1 ? '商业付费' : '完全付费');
+                font['is_vip'] = font['is_vip'] == 0 ? '<b class="layui-bg-green">完全免费</b>' : (font['is_vip'] == 1 ? '<b class="layui-bg-red">商业付费</b>' : '<b class="layui-bg-black">完全付费</b>');
                 list += '<tr><td>' + font['cn_name'] + '</td><td>' + font['en_name'] + '</td><td>' + font['is_vip'] + '</td><td><a href="' + font['attachment'] + '">点击下载</a></td></tr>';
                 document.getElementById(id).innerHTML = list;
             });
         }
-
-        // function CheckFonts() {
-        //     let fontBody = '';
-        //     layui.each(fonts, function (num, font) {
-        //         if (CheckFont(font['en_name'])) {
-        //             font['is_vip'] = font['is_vip'] == 0 ? '完全免费' : (font['is_vip'] == 1 ? '商业付费' : '完全付费');
-
-        //             fontBody += '<tr><td>' + font['cn_name'] + '</td><td>' + font['en_name'] + '</td><td>' + font['is_vip'] + '</td><td><a href="' + font['attachment'] + '">点击下载</a></td></tr>';
-        //         }
-        //         document.getElementById("fontBody").innerHTML = fontBody;
-        //     });
-        // }
 
         function CheckFont(t) {
             if (t == "") { return "" };
@@ -385,42 +401,12 @@
             var h = s.offsetHeight;
             //尝试修复部分字体无法判断问题
             //s.style.fontFamily = t + ',' + f;
-            s.style.fontFamily = "\""+t+"\"" + ',' + f;
-            
+            s.style.fontFamily = "\"" + t + "\"" + ',' + f;
+
             var r = ((s.offsetWidth != w) || (s.offsetHeight != h));
             b.removeChild(s);
             return r ? true : false;
         }
-        // function CheckFonts(t) {
-        //     var t = document.getElementById("textareaInput").value;
-        //     t = IsFontExistBatch(t);
-        //     document.getElementById("textareaOutput").value = t;
-        // }
-
-        // function IsFontExist(t) {
-        //     if (t == "") { return "" };
-        //     var f = "我的字体可以商用吗 查版权,免纠纷";
-        //     var s = document.createElement("span");
-        //     s.style.fontSize = '72px';
-        //     s.innerHTML = f;
-        //     var b = document.getElementsByTagName("body")[0];
-        //     b.appendChild(s);
-        //     s.style.fontFamily = f;
-        //     var w = s.offsetWidth;
-        //     var h = s.offsetHeight;
-        //     s.style.fontFamily = t + ',' + f;
-        //     var r = ((s.offsetWidth != w) || (s.offsetHeight != h));
-        //     b.removeChild(s);
-        //     return r ? true : false;
-        // }
-        // function IsFontExistBatch(t) {
-        //     var a = t.split("\n");
-        //     var r = new Array();
-        //     for (var i = 0; i < a.length; i++) {
-        //         r[i] = IsFontExist(a[i]);
-        //     }
-        //     return r.join("\r\n");
-        // }
     </script>
 </body>
 
